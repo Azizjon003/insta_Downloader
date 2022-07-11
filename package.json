@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@juliendu11/instagram-downloader": "^0.2.0",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
     "instagram-url-downloader": "^1.1.0",
