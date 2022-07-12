@@ -12,9 +12,11 @@
   "dependencies": {
     "@juliendu11/instagram-downloader": "^0.2.0",
     "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.1",
     "instagram-url-downloader": "^1.1.0",
     "nodemon": "^2.0.19",
+    "social-downloader-cherry": "^1.0.0",
     "telegraf": "^4.8.5"
   }
 }

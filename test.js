@@ -1,63 +1,42 @@
 const axios = require("axios");
-const https = require("https");
 const fs = require("fs");
+// const cheerio = require("cheerio");
 
-const base_url = "https://www.instagram.com/";
+// const getVideo = async (url) => {
+//   const html = await axios.get(url);
+//   console.log(`html: ${html.data}`);
+//   const $ = cheerio.load(html.data);
+//   // console.log(`cheerio: ${$}`);
+//   const videoString = $("meta[property='og:video']").attr("src");
+//   console.log(`videoString: ${videoString}`);
+//   fs.writeFileSync("index.html", html.data);
+//   return videoString;
+// };
 
-let tag = "",
-  post = "";
-let tagPref = "explore/tags/",
-  postPref = "p/";
+// getVideo(
+//   "https://www.instagram.com/p/CfoOYvPsQeb/?utm_source=ig_web_copy_link"
+// );
+const { Instagram } = require("social-downloader-cherry");
+async function ishla() {
+  const res = await Instagram.getAny(
+    "https://www.instagram.com/p/Cf60lQoodO-/?utm_source=ig_web_copy_link"
+  );
+  const story = await Instagram.getStories(
+    "zavqiddin_0802"
+    // "https://www.instagram.com/stories/zavqiddin_0802/2880862131495031253/?igshid=MDJmNzVkMjY%3D"
+  );
+  console.log(res.data);
 
-process.argv.slice(2).map((arg) => {
-  if (arg.includes("--tag")) tag = arg.split("=")[1];
-  else if (arg.includes("--post")) post = arg.split("=")[1];
-});
+  console.log("ishla");
+  console.log(story.data);
+  console.log("askhasbsahj");
+  const istory = await Instagram.getAny(
+    "https://instagram.com/stories/mr__anvar__/2880872582961085245?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="
+  );
 
-function getTag() {
-  const url = base_url + (tag ? tagPref : postPref) + (tag || post) + "?__a=1";
-  console.log(url);
-  axios
-    .get(url)
-    .then((response) => {
-      response.data.graphql.hashtag.edge_hashtag_to_media.edges.map((post) => {
-        if (!fs.existsSync(`./files/${tag}`)) {
-          fs.mkdirSync(`./files/${tag}`, { recursive: true });
-        }
-        console.log(post);
-        const file = fs.createWriteStream(
-          `./files/${tag}/${post.node.shortcode}.jpg`
-        );
-        const request = https.get(post.node.display_url, function (response) {
-          response.pipe(file);
-        });
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  console.log(istory.data);
+  const data = await axios.get(res.data.body.link, { responseType: "stream" });
+
+  await data.data.pipe(fs.createWriteStream(`${__dirname}/files/ishla.mp4`));
 }
-
-function getPost() {
-  const url = base_url + (tag ? tagPref : postPref) + (tag || post) + "?__a=1";
-  console.log(url);
-  axios
-    .get(url)
-    .then((response) => {
-      console.log(response);
-      // console.log(response.data.graphql.shortcode_media.display_url);
-
-      const file = fs.createWriteStream(`./files/${tag || post}.jpg`);
-      const request = https.get(
-        response.data.graphql.shortcode_media.display_url,
-        function (response) {
-          response.pipe(file);
-        }
-      );
-    })
-    .catch((err) => {
-      console.error(err);
-    });
-}
-
-tag ? getTag() : getPost();
+ishla();
