@@ -67,7 +67,7 @@ bot.on("text", async (msg) => {
           {
             reply_markup: {
               inline_keyboard: [
-                [{ text: "HaI", callback_data: "ha" }],
+                [{ text: "Ha", callback_data: "haI" }],
                 [{ text: "Yoq", callback_data: "yoq" }],
               ],
             },
@@ -91,14 +91,14 @@ bot.on("callback_query", async (msg) => {
     son = 0;
   } else {
     if (text == "haI") {
-      const data2 = fs.readFileSync(`${__dirname}/files/${id}.jpg`);
+      const data2 = fs.readFileSync(`${__dirname}/${id}.jpg`);
       await msg.telegram.sendPhoto(id, {
         source: data2,
         filename: `${__dirname}/files/${id}.jpg`,
         // caption: `https://t.me/Insta_down_aa_bot`,
       });
       son = 0;
-    } else msg.telegram.sendMessage(about.id, "PDF yaratilmadi");
+    } else msg.telegram.sendMessage(id, "PDF yaratilmadi");
   }
 });
 bot.launch();
