@@ -95,10 +95,10 @@ bot.on("callback_query", async (msg) => {
       await msg.telegram.sendPhoto(id, {
         source: data2,
         filename: `${__dirname}/files/${id}.jpg`,
-        // caption: `https://t.me/Insta_down_aa_bot`,
+        caption: `https://t.me/Insta_down_aa_bot`,
       });
       son = 0;
-    } else msg.telegram.sendMessage(id, "PDF yaratilmadi");
+    } else msg.telegram.sendMessage(id, "yuklab olish yaratilmadi");
   }
 });
 bot.launch();
