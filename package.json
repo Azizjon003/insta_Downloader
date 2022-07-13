@@ -14,6 +14,7 @@
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.12",
     "dotenv": "^16.0.1",
+    "instagram-url-direct": "^1.0.9",
     "instagram-url-downloader": "^1.1.0",
     "nodemon": "^2.0.19",
     "social-downloader-cherry": "^1.0.0",

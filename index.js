@@ -20,8 +20,16 @@ bot.command("start", async (msg) => {
       resize_keyboard: true,
     },
   });
+  son = 0;
 });
-
+bot.command("tags", async (msg) => {
+  const id = msg.update.message.from.id;
+  const name = msg.update.message.from.first_name;
+  msg.telegram.sendMessage(id, `${name} instagramdagi #hashtagni yuboring`, {
+    remove_keyboard: true,
+  });
+  son = 3;
+});
 bot.on("text", async (msg) => {
   const id = msg.update.message.from.id;
   const name = msg.update.message.from.first_name;
@@ -50,6 +58,7 @@ bot.on("text", async (msg) => {
       if (son == 1) {
         const res = await Instagram.getAny(text);
         console.log(res.data);
+
         let data = await axios.get(res.data.body.link, {
           responseType: "stream",
         });
@@ -109,6 +118,38 @@ bot.on("text", async (msg) => {
               },
             }
           );
+        } else {
+          if (son == 3) {
+            const base_url = "https://www.instagram.com/";
+            const url = base_url + "explore/tags/" + text + "?__a=1";
+
+            axios
+              .get(url)
+              .then((response) => {
+                console.log(response);
+                response.data.graphql.hashtag.edge_hashtag_to_media.edges.map(
+                  (post) => {
+                    if (!fs.existsSync(`./files/${text}`)) {
+                      fs.mkdirSync(`./files/${text}`, { recursive: true });
+                    }
+                    const file = fs.createWriteStream(
+                      `./files/${text}/${post.node.shortcode}.jpg`
+                    );
+                    const request = https.get(
+                      post.node.display_url,
+                      function (response) {
+                        response.pipe(file);
+                      }
+                    );
+                  }
+                );
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+
+            son = 0;
+          }
         }
       }
     }
@@ -166,6 +207,17 @@ bot.on("callback_query", async (msg) => {
       );
       son = 0;
     } else msg.telegram.sendMessage(id, "yuklab olish yaratilmadi");
+
+    process.on("uncaughtException", (err) => {
+      msg.telegram.sendMessage(id, "Xatoliklar ushlandi");
+      process.exit(1);
+    });
+
+    process.on("unhandledRejection", (err) => {
+      msg.telegram.sendMessage(id, "Xatoliklar ushlandi");
+      process.exit(1);
+    });
   }
 });
+
 bot.launch();
