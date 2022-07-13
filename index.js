@@ -82,21 +82,37 @@ bot.on("callback_query", async (msg) => {
   const id = msg.update.callback_query.from.id;
   if (text == "haV") {
     const data1 = fs.readFileSync(`${__dirname}/${id}.mp4`);
-    await msg.telegram.sendVideo(id, {
-      source: data1,
-      filename: `${id}.mp4`,
-      remove_keyboard: true,
-    });
+    await msg.telegram.sendVideo(
+      id,
+      {
+        source: data1,
+        filename: `${id}.mp4`,
+        remove_keyboard: true,
+      },
+      {
+        caption: "@Insta_down_aa_bot code by [Hack](https://t.me/coder_aa)",
+        parse_mode: "markdown",
+      }
+    );
 
     son = 0;
   } else {
     if (text == "haI") {
       const data2 = fs.readFileSync(`${__dirname}/${id}.jpg`);
-      await msg.telegram.sendPhoto(id, {
-        source: data2,
-        filename: `${__dirname}/files/${id}.jpg`,
-        caption: `https://t.me/Insta_down_aa_bot`,
-      });
+      await msg.telegram.sendPhoto(
+        id,
+        {
+          // caption: "@Insta_down_aa_bot code by @Coder_aa",
+
+          source: data2,
+          filename: `${__dirname}/files/${id}.jpg`,
+        },
+        {
+          parse_mode: "HTML",
+          caption:
+            "@Insta_down_aa_bot code by <a href='https://t.me/coder_aa'>Hack</a>",
+        }
+      );
       son = 0;
     } else msg.telegram.sendMessage(id, "yuklab olish yaratilmadi");
   }
