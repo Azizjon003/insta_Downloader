@@ -35,3 +35,5 @@ async function ishla() {
   await data.data.pipe(fs.createWriteStream(`${__dirname}/ishla.jpg`));
 }
 ishla();
+
+// 5461669985:AAFzrXUqOaG1eMzt_XfLhSvCwYcMppSfjLU

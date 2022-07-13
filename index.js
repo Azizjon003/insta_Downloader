@@ -35,44 +35,81 @@ bot.on("text", async (msg) => {
     });
     son = 1;
   } else {
-    if (son == 1) {
-      const res = await Instagram.getAny(text);
-      console.log(res.data);
-      const data = await axios.get(res.data.body.link, {
-        responseType: "stream",
-      });
+    if (text == "Profil Rasmini yuklash") {
+      msg.telegram.sendMessage(
+        id,
+        `Profil rasmini yuklash uchun linkni bizga yuboring`,
+        {
+          reply_markup: {
+            remove_keyboard: true,
+          },
+        }
+      );
+      son = 2;
+    } else {
+      if (son == 1) {
+        const res = await Instagram.getAny(text);
+        console.log(res.data);
+        let data = await axios.get(res.data.body.link, {
+          responseType: "stream",
+        });
 
-      if (res.data.body.type == "GraphVideo") {
-        await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.mp4`));
-        msg.telegram.sendMessage(
-          id,
-          `Post yuklandi,U Faylni sizga yuboraylikmi`,
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: "Ha", callback_data: "haV" }],
-                [{ text: "Yoq", callback_data: "yoq" }],
-              ],
-            },
-          }
-        );
-      }
+        if (res.data.body.type == "GraphVideo") {
+          await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.mp4`));
+          msg.telegram.sendMessage(
+            id,
+            `Post yuklandi,U Faylni sizga yuboraylikmi`,
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Ha", callback_data: "haV" }],
+                  [{ text: "Yoq", callback_data: "yoq" }],
+                ],
+              },
+            }
+          );
+        }
 
-      if (res.data.body.type == "GraphImage") {
-        await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.jpg`));
+        if (res.data.body.type == "GraphImage") {
+          await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.jpg`));
 
-        msg.telegram.sendMessage(
-          id,
-          `Post yuklandi,U Faylni sizga yuboraylikmi`,
-          {
-            reply_markup: {
-              inline_keyboard: [
-                [{ text: "Ha", callback_data: "haI" }],
-                [{ text: "Yoq", callback_data: "yoq" }],
-              ],
-            },
-          }
-        );
+          msg.telegram.sendMessage(
+            id,
+            `Post yuklandi,U Faylni sizga yuboraylikmi`,
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Ha", callback_data: "haI" }],
+                  [{ text: "Yoq", callback_data: "yoq" }],
+                ],
+              },
+            }
+          );
+        }
+      } else {
+        if (son == 2) {
+          console.log(text);
+          const rasm = await Instagram.getStories(text);
+          console.log(rasm.data);
+          data = await axios.get(rasm.data.body.profile.profile_pic_url, {
+            responseType: "stream",
+          });
+
+          await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.jpg`));
+
+          msg.telegram.sendMessage(
+            id,
+            `Accaunt rasmi  yuklandi,rasmni sizga yuboraylikmi`,
+            {
+              reply_markup: {
+                inline_keyboard: [
+                  [{ text: "Ha", callback_data: "haI" }],
+                  [{ text: "Yoq", callback_data: "yoq" }],
+                ],
+              },
+            }
+          );
+        }
       }
     }
   }
