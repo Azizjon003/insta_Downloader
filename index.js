@@ -128,7 +128,14 @@ bot.on("callback_query", async (msg) => {
       },
       {
         caption: "@Insta_down_aa_bot code by [Hack](https://t.me/coder_aa)",
-        parse_mode: "markdown",
+        parse_mode: "HTML",
+        reply_markup: {
+          keyboard: [
+            [{ text: "Post yuklash" }],
+            [{ text: "Profil Rasmini yuklash" }],
+          ],
+          resize_keyboard: true,
+        },
       }
     );
 
@@ -148,6 +155,13 @@ bot.on("callback_query", async (msg) => {
           parse_mode: "HTML",
           caption:
             "@Insta_down_aa_bot code by <a href='https://t.me/coder_aa'>Hack</a>",
+          reply_markup: {
+            keyboard: [
+              [{ text: "Post yuklash" }],
+              [{ text: "Profil Rasmini yuklash" }],
+            ],
+            resize_keyboard: true,
+          },
         }
       );
       son = 0;
