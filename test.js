@@ -30,13 +30,8 @@ async function ishla() {
   console.log("ishla");
   console.log(story.data);
   console.log("askhasbsahj");
-  const istory = await Instagram.getAny(
-    "https://instagram.com/stories/mr__anvar__/2880872582961085245?utm_source=ig_story_item_share&igshid=MDJmNzVkMjY="
-  );
-
-  console.log(istory.data);
   const data = await axios.get(res.data.body.link, { responseType: "stream" });
 
-  await data.data.pipe(fs.createWriteStream(`${__dirname}/files/ishla.mp4`));
+  await data.data.pipe(fs.createWriteStream(`${__dirname}/ishla.jpg`));
 }
 ishla();

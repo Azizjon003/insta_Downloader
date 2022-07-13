@@ -37,21 +37,20 @@ bot.on("text", async (msg) => {
   } else {
     if (son == 1) {
       const res = await Instagram.getAny(text);
+      console.log(res.data);
       const data = await axios.get(res.data.body.link, {
         responseType: "stream",
       });
 
       if (res.data.body.type == "GraphVideo") {
-        await data.data.pipe(
-          fs.createWriteStream(`${__dirname}/files/${id}.mp4`)
-        );
+        await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.mp4`));
         msg.telegram.sendMessage(
           id,
           `Post yuklandi,U Faylni sizga yuboraylikmi`,
           {
             reply_markup: {
               inline_keyboard: [
-                [{ text: "Ha", callback_data: "ha" }],
+                [{ text: "Ha", callback_data: "haV" }],
                 [{ text: "Yoq", callback_data: "yoq" }],
               ],
             },
@@ -60,9 +59,7 @@ bot.on("text", async (msg) => {
       }
 
       if (res.data.body.type == "GraphImage") {
-        await data.data.pipe(
-          fs.createWriteStream(`${__dirname}/files/${id}.jpg`)
-        );
+        await data.data.pipe(fs.createWriteStream(`${__dirname}/${id}.jpg`));
 
         msg.telegram.sendMessage(
           id,
@@ -70,7 +67,7 @@ bot.on("text", async (msg) => {
           {
             reply_markup: {
               inline_keyboard: [
-                [{ text: "Ha", callback_data: "ha" }],
+                [{ text: "HaI", callback_data: "ha" }],
                 [{ text: "Yoq", callback_data: "yoq" }],
               ],
             },
@@ -83,20 +80,25 @@ bot.on("text", async (msg) => {
 bot.on("callback_query", async (msg) => {
   const text = msg.update.callback_query.data;
   const id = msg.update.callback_query.from.id;
-  if (text == "ha") {
-    const data1 = fs.readFileSync(`${__dirname}/files/${id}.mp4`);
+  if (text == "haV") {
+    const data1 = fs.readFileSync(`${__dirname}/${id}.mp4`);
     await msg.telegram.sendVideo(id, {
       source: data1,
-      filename: `${__dirname}/files/${id}.mp4`,
-      caption: `https://t.me/Insta_down_aa_bot`,
+      filename: `${id}.mp4`,
+      remove_keyboard: true,
     });
 
-    // const data2 = fs.readFileSync(`${__dirname}/files/${id}.jpg`);
-    // await msg.telegram.sendPhoto(id, {
-    //   source: data2,
-    //   filename: `${__dirname}/files/${id}.jpg`,
-    //   caption: `https://t.me/Insta_down_aa_bot`,
-    // });
-  } else msg.telegram.sendMessage(about.id, "PDF yaratilmadi");
+    son = 0;
+  } else {
+    if (text == "haI") {
+      const data2 = fs.readFileSync(`${__dirname}/files/${id}.jpg`);
+      await msg.telegram.sendPhoto(id, {
+        source: data2,
+        filename: `${__dirname}/files/${id}.jpg`,
+        // caption: `https://t.me/Insta_down_aa_bot`,
+      });
+      son = 0;
+    } else msg.telegram.sendMessage(about.id, "PDF yaratilmadi");
+  }
 });
 bot.launch();
