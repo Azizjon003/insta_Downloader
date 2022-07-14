@@ -4,7 +4,6 @@ const { Telegraf } = require("telegraf");
 const { Instagram } = require("social-downloader-cherry");
 const fs = require("fs");
 const axios = require("axios");
-const { next } = require("cheerio/lib/api/traversing");
 const token = process.env.Token;
 const bot = new Telegraf(token);
 let son = 0;
