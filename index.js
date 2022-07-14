@@ -46,7 +46,7 @@ bot.on("text", async (msg) => {
     if (text == "Profil Rasmini yuklash") {
       msg.telegram.sendMessage(
         id,
-        `Profil rasmini yuklash uchun accaunt nomini bizga yuboring:Masalan cristiano`,
+        `Profil rasmini yuklash uchun accaunt nomini bizga yuboring:Masalan cristiano;`,
         {
           reply_markup: {
             remove_keyboard: true,
