@@ -4,10 +4,11 @@ const { Telegraf } = require("telegraf");
 const { Instagram } = require("social-downloader-cherry");
 const fs = require("fs");
 const axios = require("axios");
+const { next } = require("cheerio/lib/api/traversing");
 const token = process.env.Token;
 const bot = new Telegraf(token);
 let son = 0;
-bot.command("start", async (msg) => {
+bot.command("start", async (msg, next) => {
   const id = msg.update.message.from.id;
   const name = msg.update.message.from.first_name;
 
@@ -58,7 +59,14 @@ bot.on("text", async (msg) => {
       if (son == 1) {
         const res = await Instagram.getAny(text);
         console.log(res.data);
-
+        if (res.hasError) {
+          msg.telegram.sendMessage(id, `Dasturda xatolik bor`, {
+            reply_markup: {
+              remove_keyboard: true,
+            },
+          });
+          return;
+        }
         let data = await axios.get(res.data.body.link, {
           responseType: "stream",
         });
@@ -99,6 +107,15 @@ bot.on("text", async (msg) => {
         if (son == 2) {
           console.log(text);
           const rasm = await Instagram.getStories(text);
+
+          if (rasm.hasError) {
+            msg.telegram.sendMessage(id, `Dasturda xatolik bor`, {
+              reply_markup: {
+                remove_keyboard: true,
+              },
+            });
+            return;
+          }
           console.log(rasm.data);
           data = await axios.get(rasm.data.body.profile.profile_pic_url, {
             responseType: "stream",
