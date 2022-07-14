@@ -207,16 +207,6 @@ bot.on("callback_query", async (msg) => {
       );
       son = 0;
     } else msg.telegram.sendMessage(id, "yuklab olish yaratilmadi");
-
-    process.on("uncaughtException", (err) => {
-      msg.telegram.sendMessage(id, "Xatoliklar ushlandi");
-      process.exit(1);
-    });
-
-    process.on("unhandledRejection", (err) => {
-      msg.telegram.sendMessage(id, "Xatoliklar ushlandi");
-      process.exit(1);
-    });
   }
 });
 
