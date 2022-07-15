@@ -13,7 +13,7 @@ bot.command("start", async (msg) => {
 
   msg.telegram.sendMessage(
     id,
-    `Salom ${name} Botimizga xush kelibsiz\n Bizni qo'llab quvvatlab kanalimizga obuna bo'ling @ ubuntulinuxaau`,
+    `Salom ${name} Botimizga xush kelibsiz\n Bizni qo'llab quvvatlab kanalimizga obuna bo'ling @ubuntulinuxaau`,
     {
       reply_markup: {
         keyboard: [
@@ -244,11 +244,15 @@ bot.on("callback_query", async (msg) => {
       } else msg.telegram.sendMessage(id, "yuklab olish yaratilmadi");
     }
   } catch (err) {
-    msg.telegram.sendMessage(id, `Dasturda xatolik bor`, {
-      reply_markup: {
-        remove_keyboard: true,
-      },
-    });
+    msg.telegram.sendMessage(
+      id,
+      `Dasturda xatolik bor /start buyrug'ini bering`,
+      {
+        reply_markup: {
+          remove_keyboard: true,
+        },
+      }
+    );
   }
 });
 
