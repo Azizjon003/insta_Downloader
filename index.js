@@ -11,15 +11,19 @@ bot.command("start", async (msg) => {
   const id = msg.update.message.from.id;
   const name = msg.update.message.from.first_name;
 
-  msg.telegram.sendMessage(id, `Salom ${name} Botimizga xush kelibsiz`, {
-    reply_markup: {
-      keyboard: [
-        [{ text: "Post yuklash" }],
-        [{ text: "Profil Rasmini yuklash" }],
-      ],
-      resize_keyboard: true,
-    },
-  });
+  msg.telegram.sendMessage(
+    id,
+    `Salom ${name} Botimizga xush kelibsiz\n Bizni qo'llab quvvatlab kanalimizga obuna bo'ling @ ubuntulinuxaau`,
+    {
+      reply_markup: {
+        keyboard: [
+          [{ text: "Post yuklash" }],
+          [{ text: "Profil Rasmini yuklash" }],
+        ],
+        resize_keyboard: true,
+      },
+    }
+  );
   son = 0;
 });
 bot.command("tags", async (msg) => {
@@ -248,4 +252,12 @@ bot.on("callback_query", async (msg) => {
   }
 });
 
+bot.catch((err, msg) => {
+  const id = msg.from.id;
+  msg.telegram.sendMessage(id, `Dasturda xatolik bor`, {
+    reply_markup: {
+      remove_keyboard: true,
+    },
+  });
+});
 bot.launch();
