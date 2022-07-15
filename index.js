@@ -258,10 +258,14 @@ bot.on("callback_query", async (msg) => {
 
 bot.catch((err, msg) => {
   const id = msg.from.id;
-  msg.telegram.sendMessage(id, `Dasturda xatolik bor`, {
-    reply_markup: {
-      remove_keyboard: true,
-    },
-  });
+  msg.telegram.sendMessage(
+    id,
+    `Dasturda xatolik bor /start buyrug'ini ishlating`,
+    {
+      reply_markup: {
+        remove_keyboard: true,
+      },
+    }
+  );
 });
 bot.launch();
