@@ -203,7 +203,8 @@ bot.on("callback_query", async (msg) => {
           remove_keyboard: true,
         },
         {
-          caption: "@Insta_down_aa_bot code by [Hack](https://t.me/coder_aa)",
+          caption:
+            "@Insta_down_aa_bot code by <a href='https://t.me/coder_aa'>Hack</a>",
           parse_mode: "HTML",
           reply_markup: {
             keyboard: [
