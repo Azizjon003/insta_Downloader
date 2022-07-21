@@ -11,6 +11,8 @@ bot.command("start", async (msg) => {
   const id = msg.update.message.from.id;
   const name = msg.update.message.from.first_name;
 
+  console.log(name);
+
   msg.telegram.sendMessage(
     id,
     `Salom ${name} Botimizga xush kelibsiz\n Bizni qo'llab quvvatlab kanalimizga obuna bo'ling @ubuntulinuxaau`,
@@ -39,7 +41,9 @@ bot.on("text", async (msg) => {
     const id = msg.update.message.from.id;
     const name = msg.update.message.from.first_name;
     const text = msg.update.message.text;
+    // const name = msg.update.message.from.first_name;
 
+    console.log(name);
     if (text == "Post yuklash") {
       msg.telegram.sendMessage(id, `Post yuklash uchun linkni bizga yuboring`, {
         reply_markup: {
